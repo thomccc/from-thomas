@@ -1,0 +1,110 @@
+---
+export interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = "A simple, clean personal website" } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content={description} />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    
+    <!-- Preload fonts to prevent layout shift -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Hedvig+Letters+Serif:opsz,wght@10..24,400&display=swap" as="style" />
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Hedvig+Letters+Sans:opsz,wght@10..24,400&display=swap" as="style" />
+    
+    <!-- Fonts with display=swap -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
+    <link href="https://fonts.googleapis.com/css2?family=Hedvig+Letters+Serif:opsz,wght@10..24,400&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Hedvig+Letters+Sans:opsz,wght@10..24,400&display=swap" rel="stylesheet" />
+    
+    <!-- Global Styles -->
+    <link rel="stylesheet" href="/styles/globals.css" />
+    
+    <style is:global>
+      :root {
+        --font-hedvig-sans: 'Hedvig Letters Sans', Arial, Helvetica, sans-serif;
+        --font-hedvig-serif: 'Hedvig Letters Serif', Georgia, serif;
+      }
+      
+      /* Prevent layout shift during font loading */
+      .font-hedvig-serif {
+        font-display: swap;
+      }
+      
+      .font-hedvig-sans {
+        font-display: swap;
+      }
+      
+      /* Hide content until fonts are loaded to prevent flashing */
+      .font-loading {
+        opacity: 0;
+        transition: opacity 0.3s ease-in-out;
+      }
+      
+      .font-loaded {
+        opacity: 1;
+      }
+    </style>
+    
+    <script>
+      // Advanced font loading detection to prevent flashing
+      (function() {
+        // Function to mark fonts as loaded
+        function markFontsLoaded() {
+          document.documentElement.classList.add('font-loaded');
+          document.body.classList.add('font-loaded');
+        }
+        
+        // Check if Font Loading API is available
+        if ('fonts' in document) {
+          // Try to load fonts with timeout
+          const fontLoadPromise = Promise.all([
+            document.fonts.load('1em Hedvig Letters Serif'),
+            document.fonts.load('1em Hedvig Letters Sans')
+          ]);
+          
+          // Set a timeout to prevent infinite waiting
+          const timeoutPromise = new Promise(resolve => {
+            setTimeout(resolve, 2000); // 2 second timeout
+          });
+          
+          // Race between font loading and timeout
+          Promise.race([fontLoadPromise, timeoutPromise])
+            .then(() => {
+              markFontsLoaded();
+            })
+            .catch(() => {
+              // Fallback if font loading fails
+              markFontsLoaded();
+            });
+        } else {
+          // Fallback for browsers without font loading API
+          // Use a small delay to allow CSS to settle
+          setTimeout(markFontsLoaded, 100);
+        }
+        
+        // Additional fallback: mark as loaded when DOM is ready
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', markFontsLoaded);
+        } else {
+          markFontsLoaded();
+        }
+      })();
+    </script>
+  </head>
+  <body class="font-loading">
+    <div class="page-transition">
+      <slot />
+    </div>
+  </body>
+</html>

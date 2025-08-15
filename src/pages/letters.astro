@@ -1,0 +1,175 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Letters - From Thomas">
+  <style>
+    #password-input::placeholder {
+      color: rgba(119, 108, 94, 0.3) !important;
+    }
+  </style>
+  <div 
+    class="min-h-screen"
+    style="background-color: #E7E0D7"
+  >
+    <!-- Password Protection Overlay -->
+    <div id="password-overlay" class="fixed inset-0 z-50 flex items-center justify-center" style="background-color: #E7E0D7">
+      <div class="text-center px-8">
+        <h1 class="font-hedvig-serif text-2xl text-[#74695B] mb-8">Letters</h1>
+        <div class="mb-6">
+          <input 
+            type="password" 
+            id="password-input" 
+            placeholder="Enter password" 
+            class="px-8 py-4 bg-[rgba(0,0,0,0.03)] hover:bg-[rgba(0,0,0,0.06)] text-[#74695B] font-hedvig-sans text-lg rounded-2xl transition-all duration-300 focus:outline-none"
+          >
+        </div>
+        <button 
+          id="submit-password"
+          class="px-8 py-4 bg-[rgba(0,0,0,0.03)] hover:bg-[rgba(0,0,0,0.06)] text-[#74695B] font-hedvig-sans text-lg rounded-2xl transition-all duration-300 transform hover:-translate-y-1"
+        >
+          Enter
+        </button>
+        <div id="error-message" class="mt-4 text-red-600 font-hedvig-sans text-sm hidden">
+          Incorrect password. Please try again.
+        </div>
+      </div>
+    </div>
+
+    <!-- Letters Content (Hidden by default) -->
+    <div id="letters-content" class="hidden">
+      <nav class="flex justify-between items-center px-8 py-6">
+        <a href="/" class="font-hedvig-serif text-[16px] text-[#74695B] relative group">
+          <span class="relative">
+            From Thomas
+            <span class="absolute bottom-0 left-0 w-0 h-px bg-[#74695B] transition-all duration-500 ease-out group-hover:w-full"></span>
+          </span>
+        </a>
+        
+        <div class="flex gap-8">
+          <a href="/letters" class="font-hedvig-serif text-[16px] text-[#74695B] relative group">
+            <span class="relative">
+              Letters
+              <span class="absolute bottom-0 left-0 w-full h-px bg-[#74695B]"></span>
+            </span>
+          </a>
+          
+          <a href="/about" class="font-hedvig-serif text-[16px] text-[#74695B] relative group">
+            <span class="relative">
+              About
+              <span class="absolute bottom-0 left-0 w-0 h-px bg-[#74695B] transition-all duration-500 ease-out group-hover:w-full"></span>
+            </span>
+          </a>
+        </div>
+      </nav>
+      
+      <main class="flex-1 px-8 pt-24 pb-6 max-w-2xl mx-auto">
+        <div class="mb-8">
+          <div class="font-hedvig-sans text-[16px] text-[#74695B] mb-6">
+            07.05.25
+          </div>
+          
+          <div class="font-hedvig-sans text-[16px] text-[#74695B] leading-relaxed space-y-6">
+            <p>
+              In the fast-paced world of digital communication, the importance of effective date and title management cannot be overstated. Whether you are a content creator, a project manager, or simply someone who wants to keep their digital life organized, understanding how to properly label and date your documents is crucial. This blog post will explore the significance of these elements and provide tips on how to optimize them for better clarity and organization.
+            </p>
+            
+            <p>
+              First and foremost, let's discuss the role of dates in our digital documents. Dates serve as a chronological marker, allowing us to track when a document was created, modified, or shared. This is particularly important in collaborative environments where multiple individuals may be working on the same project. By clearly indicating the date, team members can easily identify the most recent version of a document, reducing confusion and ensuring that everyone is on the same page.
+            </p>
+            
+            <p>
+              Moreover, dates can also provide context. For instance, if you are reviewing a report from last month, knowing the exact date it was created can help you understand the relevance of the information presented. It allows you to assess whether the data is still applicable or if it needs to be updated. In this way, dates act as a guide, helping us navigate through the vast sea of information we encounter daily.
+            </p>
+            
+            <p>
+              Now, let's turn our attention to titles. A well-crafted title is more than just a label; it is the first impression your document makes. It should be concise yet descriptive enough to give the reader a clear idea of what to expect. A good title can pique interest and encourage engagement, while a vague or misleading title can lead to disinterest or confusion.
+            </p>
+            
+            <p>
+              When creating titles, consider the following tips:
+            </p>
+            
+            <div class="pl-6 space-y-4">
+              <p>
+                <strong>1. Be Specific:</strong> Instead of using generic titles like "Report" or "Document," opt for something more descriptive, such as "2023 Marketing Strategy Report" or "Q1 Financial Analysis." This specificity helps the reader understand the content at a glance.
+              </p>
+              
+              <p>
+                <strong>2. Use Keywords:</strong> Incorporating relevant keywords can enhance searchability, especially in shared drives or databases. Think about what terms someone might use to find your document and include those in the title.
+              </p>
+              
+              <p>
+                <strong>3. Keep It Short:</strong> While it's important to be descriptive, brevity is key. Aim for titles that are informative but not overly long. A good rule of thumb is to keep titles under 10 words.
+              </p>
+            </div>
+            
+            <p>
+              In addition to these tips, consider the visual presentation of dates and titles in your documents. Proper formatting can make a significant difference in readability and professional appearance.
+            </p>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+</Layout>
+
+<script>
+  // Password Protection
+  const passwordOverlay = document.getElementById('password-overlay');
+  const lettersContent = document.getElementById('letters-content');
+  const passwordInput = document.getElementById('password-input');
+  const submitButton = document.getElementById('submit-password');
+  const errorMessage = document.getElementById('error-message');
+  
+  const correctPassword = '10003';
+  
+  // Always show password overlay by default
+  passwordOverlay.classList.remove('hidden');
+  lettersContent.classList.add('hidden');
+  
+  // Handle password submission
+  function checkPassword() {
+    const enteredPassword = passwordInput.value;
+    
+         if (enteredPassword === correctPassword) {
+       // Correct password - show content
+       passwordOverlay.classList.add('hidden');
+       lettersContent.classList.remove('hidden');
+       errorMessage.classList.add('hidden');
+     } else {
+      // Wrong password - show error
+      errorMessage.classList.remove('hidden');
+      passwordInput.value = '';
+      passwordInput.focus();
+    }
+  }
+  
+  // Event listeners
+  submitButton.addEventListener('click', checkPassword);
+  passwordInput.addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') {
+      checkPassword();
+    }
+  });
+  
+  // Focus password input on page load
+  function focusPasswordInput() {
+    if (passwordInput) {
+      // Use setTimeout to ensure focus happens after any other scripts
+      setTimeout(() => {
+        passwordInput.focus();
+        passwordInput.select(); // Also select any existing text
+      }, 100);
+    }
+  }
+  
+  // Focus on page load and after DOM is ready
+  focusPasswordInput();
+  document.addEventListener('DOMContentLoaded', focusPasswordInput);
+  window.addEventListener('load', focusPasswordInput);
+  
+  // Additional focus attempts with longer delays
+  setTimeout(focusPasswordInput, 500);
+  setTimeout(focusPasswordInput, 1000);
+</script>

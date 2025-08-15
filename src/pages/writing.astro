@@ -1,0 +1,118 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Writing - From Thomas">
+  <div class="min-h-screen" style="background: color(display-p3 0.914 0.902 0.882) !important;">
+    <nav class="fixed top-0 left-0 z-40 px-8 py-6">
+      <div class="flex items-center gap-4">
+        <a href="/" class="font-hedvig-serif text-[16px] text-[color(display-p3_0.533_0.518_0.494)] relative group opacity-50 hover:opacity-100 transition-opacity duration-300 mix-blend-multiply">
+          <span class="relative">
+            Back
+            <span class="absolute bottom-0 left-0 w-0 h-px bg-[color(display-p3_0.533_0.518_0.494)] transition-all duration-500 ease-out group-hover:w-full"></span>
+          </span>
+        </a>
+        
+        <div id="scroll-percentage" class="font-hedvig-serif text-[16px] text-[color(display-p3_0.533_0.518_0.494)] opacity-50 mix-blend-multiply">
+          0%
+        </div>
+      </div>
+    </nav>
+    
+    <main class="flex-1 px-8 pt-32 pb-6 max-w-2xl mx-auto">
+      <div class="mb-8">
+        <div id="date-header" class="font-hedvig-sans text-[16px] text-[color(display-p3_0.533_0.518_0.494)] mb-6 opacity-0 transition-opacity duration-1000 ease-in-out">
+          08.08.25
+        </div>
+        
+        <div id="content-text" class="font-hedvig-sans text-[16px] text-[color(display-p3_0.533_0.518_0.494)] leading-relaxed space-y-6 opacity-0 transition-opacity duration-1000 ease-in-out">
+          <p>
+            If you'd told me a year ago I'd be writing about faith, I'd have laughed. Life wasn't bad - more like owning a fancy coffee machine but always sticking to instant. You know the machine's there, but you never quite make up your mind to use it. Whenever that boredom and stuckness crept in - all fueled by that indecision - I'd reach for my usual two escapes: drink or run. Both reliable. Both ultimately useless.
+          </p>
+          
+          <p>
+            I grew up underneath the imposing spires of Canterbury Cathedral - steeped in that very formal Church of England vibe. My knowledge of Christ? Pretty much two things: we sing a lot of hymns, and it's all very... proper. Then Chelsea dragged me to church on the regular this year. I caught some decent life lessons in the sermons nothing earth-shattering, more like polite advice you smile at and then forget by midweek. I even read the whole Gospel of John, start to finish, but honestly, it felt more like ticking off a book on a reading list than something that shook me awake.
+          </p>
+          
+          <p>
+            Then came the shift: unexpectedly, everything paused. Work sputtered. My personal life stuttered. I sat there thinking, well, this is a dark place. I realized I couldn't do this alone. I needed Christ. Not a dramatic, life-flashing-before-my-eyes moment, but a quiet, stubborn truth: I couldn't do this alone. So I started reading the Bible more seriously not because it was some miracle potion, but because it became a torch in the dark, giving me a steady, calming peace.
+          </p>
+          
+          <p>
+            Since starting this journey, I've been searching for answers about who I'm meant to be. For work, Colossians 3:23 reminds me to "work heartily, as for the Lord and not for men" - to really be in sync with my work. In life, Galatians 5:22 and Ephesians 5:16 encourage me to grow the fruits of the Spirit - love, patience, kindness and to make the most of the time I've got. And marriage? Ephesians 5:25–33 flips the usual story: it's not just about finding your other half, but about loving and building each other up, helping your partner become the best version of themselves. Think of it like assembling Ikea furniture—not perfect the first time, but better together, piece by piece, supporting each other to reach full potential.
+          </p>
+          
+          <p>
+            The week after was… complicated, in a good way. Discipleship at Vision Calvary wasn't some mystical mountaintop moment — it was worksheets. Brutal ones. The kind that swerve past your polite nodding and ram straight into the bits you've been carefully avoiding. And somehow, in all that noise, God's Word began to still my restless mind.
+          </p>
+          
+          <p>
+            Three weeks in, the shine's worn off - and that's probably a good thing. The sugar rush has settled into something steadier, which means it's on me now to keep showing up. The path isn't all glitter and hallelujahs; it's patchy, uneven, occasionally full of potholes. But God's Word still cuts through the noise. I'm learning that waiting (2 Peter 3:8–9) isn't punishment - it's part of the process. Right now, that waiting stretches across everything: work, relationships, and the long business of actually getting to know Him.
+          </p>
+          
+          <p>
+            I've spent 15 years living far from my family, carving out my own path and learning to stand on my own two feet. I'm definitely not the guy chasing wild nights, though sure, I've had my moments with drinking. But reading God's word and stepping into faith, prayer, and action has opened my eyes. I'm seeing more clearly the virtues I want to grow and the vices I need to leave behind. But also just for building this personal relationship with God. Most of my friends live differently to this path I'm on, but I'm more certain than ever, this path is the right path, for me.
+          </p>
+          
+          <p>
+            Why trust God? Because He offers a blueprint for adulthood. School taught me how to be a student, but life never showed me how to be a man, a child of God, or a husband someday. For me, faith is the foundation of life. Prayer is that quiet daily privilege where you realize how truly blessed you are to have people you pray for, and who pray for you. Action? Well, I'm still rough around the edges there. But as Pastor Philip Macintosh says, "Start tying the undone shoelaces." And this little confession? That's one knot done.
+          </p>
+          
+          <p class="opacity-50">
+            And finally: 1 Corinthians 13:13: faith, hope, love. The greatest of these? Love. It sums up everything I'm trying to say, but way better.
+          </p>
+          
+          <p class="opacity-50">
+            I believe Jesus is God's Son who came to rescue me from my mistakes and offer a fresh start. Because of Him, I'm confident I'm forgiven, loved deeply, and that my life has real meaning beyond just getting by.
+          </p>
+        </div>
+      </div>
+    </main>
+  </div>
+</Layout>
+
+<style>
+  body {
+    background: color(display-p3 0.914 0.902 0.882) !important;
+  }
+  
+  .min-h-screen {
+    background: color(display-p3 0.914 0.902 0.882) !important;
+  }
+</style>
+
+<script>
+  // Fade in the content when the page loads
+  document.addEventListener('DOMContentLoaded', function() {
+    const dateHeader = document.getElementById('date-header');
+    const contentText = document.getElementById('content-text');
+    
+    // Start with opacity 0 (already set in HTML)
+    
+    // Fade in the date header first
+    setTimeout(() => {
+      dateHeader.style.opacity = '1';
+    }, 200);
+    
+    // Fade in the content text with a slight delay
+    setTimeout(() => {
+      contentText.style.opacity = '1';
+    }, 600);
+  });
+  
+  // Scroll percentage calculation
+  function updateScrollPercentage() {
+    const scrollPercentage = document.getElementById('scroll-percentage');
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const percentage = Math.round((scrollTop / scrollHeight) * 100);
+    
+    scrollPercentage.textContent = percentage + '%';
+  }
+  
+  // Update scroll percentage on scroll
+  window.addEventListener('scroll', updateScrollPercentage);
+  
+  // Initial calculation
+  updateScrollPercentage();
+</script>

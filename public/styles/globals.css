@@ -1,0 +1,87 @@
+@import "tailwindcss";
+
+:root {
+  --background: #E9E6E1;
+  --foreground: color(display-p3 0.529 0.478 0.416);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-hedvig-sans);
+  --font-mono: var(--font-hedvig-sans);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #E9E6E1;
+    --foreground: color(display-p3 0.529 0.478 0.416);
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-hedvig-sans), Arial, Helvetica, sans-serif;
+  min-height: 100vh;
+  /* Prevent layout shift */
+  font-display: swap;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html {
+  background: var(--background);
+}
+
+/* Font family definitions with consistent sizing and better fallbacks */
+.font-hedvig-serif {
+  font-family: 'Hedvig Letters Serif', Georgia, 'Times New Roman', Times, serif;
+  font-display: swap;
+  /* Ensure consistent text sizing */
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  /* Use system fonts as immediate fallbacks */
+  font-synthesis: none;
+}
+
+.font-hedvig-sans {
+  font-family: 'Hedvig Letters Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-display: swap;
+  /* Ensure consistent text sizing */
+  line-height: 1.5;
+  letter-spacing: 0;
+  /* Use system fonts as immediate fallbacks */
+  font-synthesis: none;
+}
+
+/* Page transition wrapper */
+.page-transition {
+  min-height: 100vh;
+  background: inherit;
+}
+
+/* Ensure smooth transitions */
+.page-transition > * {
+  background: inherit;
+}
+
+/* Prevent text layout shifts */
+p, h1, h2, h3, h4, h5, h6, div, span {
+  font-display: swap;
+}
+
+/* Font loading states */
+.font-loading {
+  visibility: hidden;
+}
+
+.font-loaded {
+  visibility: visible;
+}
+
+/* Ensure consistent text rendering across all elements */
+* {
+  font-display: swap;
+}

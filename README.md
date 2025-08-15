@@ -1,36 +1,80 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# From Thomas - Personal Website
+
+A simple, clean personal website built with **Astro** and Tailwind CSS.
+
+## Features
+
+- ✨ **Astro** - Fast static site generation
+- 🎨 **Tailwind CSS** - Utility-first CSS framework
+- 📱 **Responsive design** - Works on all devices
+- 🚀 **Fast performance** - Static generation for optimal speed
+- 🎭 **Custom styling** - Beautiful gradients and typography
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
 
+- Node.js 18+ 
+- npm or yarn
+
+### Installation
+
+1. Install dependencies:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Start the development server:
+```bash
+npm run dev
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3. Open [http://localhost:4321](http://localhost:4321) in your browser.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Build for Production
 
-## Learn More
+```bash
+npm run build
+```
 
-To learn more about Next.js, take a look at the following resources:
+### Preview Production Build
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+npm run preview
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Project Structure
 
-## Deploy on Vercel
+```
+src/
+├── layouts/
+│   └── Layout.astro      # Main layout wrapper
+├── pages/
+│   ├── index.astro       # Home page
+│   ├── letters.astro     # Letters page
+│   └── about.astro       # About page
+└── styles/
+    └── globals.css       # Global styles and Tailwind imports
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+public/                    # Static assets
+├── favicon.svg
+└── ... (other assets)
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Design Features
+
+- **Black background** (`#000000`) for main app
+- **Cream background** (`#F2EDE6`) for letters page
+- **Custom fonts**: Hedvig Letters Serif and Inter
+- **Smooth hover effects** on navigation links
+- **Responsive navigation** with proper spacing
+
+## Technologies Used
+
+- [Astro](https://astro.build/) - Static site generator
+- [Tailwind CSS](https://tailwindcss.com/) - CSS framework
+- [Framer Motion](https://www.framer.com/motion/) - Animation library (if needed for future enhancements)
+
+## License
+
+This project is open source and available under the [MIT License](LICENSE).

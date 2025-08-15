@@ -1,0 +1,175 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="From Thomas - Personal Website">
+  <div class="min-h-screen relative">
+    <!-- Background gradient overlay -->
+    <div 
+      id="bg-gradient"
+      class="absolute inset-0 z-0 transition-opacity duration-500 ease-in-out"
+      style="background: color(display-p3 0.914 0.902 0.882)"
+    ></div>
+    
+    <!-- Content -->
+    <div class="relative z-10 min-h-screen flex items-center justify-center">
+      <div class="text-center">
+        <!-- Number Pad -->
+        <div class="space-y-6">
+          <!-- Display -->
+          <div id="password-display" class="font-hedvig-serif text-4xl text-[color(display-p3_0.533_0.518_0.494)] text-center tracking-widest min-h-[60px] flex items-center justify-center mb-8">
+            
+          </div>
+          
+          <!-- Number Pad Grid -->
+          <div class="grid grid-cols-3 gap-4 max-w-xs mx-auto">
+            <button class="number-btn" data-number="1">1</button>
+            <button class="number-btn" data-number="2">2</button>
+            <button class="number-btn" data-number="3">3</button>
+            <button class="number-btn" data-number="4">4</button>
+            <button class="number-btn" data-number="5">5</button>
+            <button class="number-btn" data-number="6">6</button>
+            <button class="number-btn" data-number="7">7</button>
+            <button class="number-btn" data-number="8">8</button>
+            <button class="number-btn" data-number="9">9</button>
+            <button class="number-btn" data-number="0">0</button>
+          </div>
+          
+          <div id="error-message" class="text-red-300 font-hedvig-serif text-sm hidden text-center">
+            Incorrect password. Please try again.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<style>
+  .number-btn {
+    @apply w-16 h-16 rounded-full bg-black/[0.03] text-[color(display-p3_0.533_0.518_0.494)] font-hedvig-sans text-2xl transition-all duration-500 ease-out flex items-center justify-center hover:bg-black/[0.06] active:scale-90;
+  }
+  
+  .number-btn:active {
+    transform: scale(0.9) translateY(2px);
+    transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .number-btn:hover {
+    transform: translateY(-2px);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  /* Luxurious number display animation */
+  #password-display {
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  /* Luxurious background fade */
+  #bg-gradient {
+    transition: all 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  /* Keypad fade out animation */
+  .grid {
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+</style>
+
+<script>
+  let currentPassword = '';
+  const correctPassword = '10003';
+  const passwordDisplay = document.getElementById('password-display');
+  const errorMessage = document.getElementById('error-message');
+  
+  // Number button functionality
+  document.querySelectorAll('.number-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+      if (currentPassword.length < 5) {
+        const number = this.getAttribute('data-number');
+        currentPassword += number;
+        updateDisplay();
+        
+        checkPassword();
+      }
+    });
+  });
+  
+  // Update the display
+  function updateDisplay() {
+    passwordDisplay.textContent = currentPassword;
+    
+    // Luxurious number appearance animation
+    if (currentPassword.length > 0) {
+      passwordDisplay.style.transform = 'scale(1.05)';
+      passwordDisplay.style.opacity = '0.8';
+      
+      setTimeout(() => {
+        passwordDisplay.style.transform = 'scale(1)';
+        passwordDisplay.style.opacity = '1';
+      }, 150);
+    }
+  }
+  
+  // Check password
+  function checkPassword() {
+    if (currentPassword === correctPassword) {
+      // Luxurious success animation
+      passwordDisplay.style.transform = 'scale(1.1)';
+      passwordDisplay.style.opacity = '0.9';
+      
+      setTimeout(() => {
+        // Fade out the keypad and numbers
+        const keypad = document.querySelector('.grid');
+        keypad.style.opacity = '0';
+        keypad.style.transform = 'scale(0.95)';
+        keypad.style.transition = 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
+        
+        // Fade out the password display
+        passwordDisplay.style.opacity = '0';
+        passwordDisplay.style.transform = 'scale(0.9)';
+        
+        // Correct password - luxurious fade out and redirect
+        const bgGradient = document.getElementById('bg-gradient');
+        bgGradient.style.opacity = '0';
+        bgGradient.style.transform = 'scale(1.05)';
+        
+        setTimeout(() => {
+          window.location.href = '/writing';
+        }, 300);
+      }, 200);
+    } else if (currentPassword.length === 5) {
+      // Wrong password - elegant error animation
+      passwordDisplay.style.transform = 'scale(0.95)';
+      passwordDisplay.style.opacity = '0.7';
+      
+      setTimeout(() => {
+        passwordDisplay.style.transform = 'scale(1)';
+        passwordDisplay.style.opacity = '1';
+      }, 200);
+      
+      errorMessage.classList.remove('hidden');
+      setTimeout(() => {
+        currentPassword = '';
+        updateDisplay();
+        errorMessage.classList.add('hidden');
+      }, 2000);
+    }
+  }
+  
+  // Keyboard support
+  document.addEventListener('keydown', function(e) {
+    if (e.key >= '0' && e.key <= '9') {
+      if (currentPassword.length < 5) {
+        currentPassword += e.key;
+        updateDisplay();
+        
+        checkPassword();
+      }
+    } else if (e.key === 'Backspace') {
+      if (currentPassword.length > 0) {
+        currentPassword = currentPassword.slice(0, -1);
+        updateDisplay();
+      }
+    }
+  });
+</script>
