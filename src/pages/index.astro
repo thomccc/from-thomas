@@ -131,9 +131,11 @@ import Layout from '../layouts/Layout.astro';
   const passwordDisplay = document.getElementById('password-display');
   const errorMessage = document.getElementById('error-message');
   
-  // Clean button functionality without interfering with navigation
+  // Enhanced button functionality for iOS compatibility
   document.querySelectorAll('.number-btn').forEach(btn => {
+    // Add both click and touch events for iOS compatibility
     btn.addEventListener('click', handleButtonClick);
+    btn.addEventListener('touchstart', handleButtonClick, { passive: true });
     
     function handleButtonClick(event) {
       if (currentPassword.length < 5) {
