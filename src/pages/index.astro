@@ -3,7 +3,7 @@ import Layout from '../layouts/Layout.astro';
 ---
 
 <Layout title="From Thomas - Personal Website">
-  <div class="h-screen h-[100dvh] relative overflow-hidden">
+  <div class="h-screen h-[100dvh] relative overflow-hidden no-scroll-page">
     <!-- Background gradient overlay -->
     <div 
       id="bg-gradient"
@@ -45,8 +45,24 @@ import Layout from '../layouts/Layout.astro';
 </Layout>
 
 <style>
+  /* Page-specific scroll prevention and iOS zoom prevention */
+  .no-scroll-page {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-text-size-adjust: none;
+    -moz-text-size-adjust: none;
+    -ms-text-size-adjust: none;
+    text-size-adjust: none;
+  }
+  
   .number-btn {
     @apply w-16 h-16 rounded-full bg-black/[0.03] text-[color(display-p3_0.533_0.518_0.494)] font-hedvig-sans text-2xl transition-all duration-500 ease-out flex items-center justify-center hover:bg-black/[0.06] active:scale-90;
+    /* Allow touch actions on buttons specifically */
+    touch-action: manipulation;
   }
   
   .number-btn:active {
@@ -76,6 +92,57 @@ import Layout from '../layouts/Layout.astro';
 </style>
 
 <script>
+  // iOS zoom prevention - only for this page, but allow button functionality
+  (function() {
+    // Prevent zoom on double tap for non-interactive elements only
+    let lastTouchEnd = 0;
+    document.addEventListener('touchend', function (event) {
+      // Don't prevent default on buttons or interactive elements
+      if (event.target.closest('.number-btn') || event.target.closest('button')) {
+        return;
+      }
+      
+      const now = (new Date()).getTime();
+      if (now - lastTouchEnd <= 300) {
+        event.preventDefault();
+      }
+      lastTouchEnd = now;
+    }, false);
+    
+    // Prevent pinch zoom on the page background
+    document.addEventListener('gesturestart', function (event) {
+      // Only prevent on non-interactive areas
+      if (!event.target.closest('.number-btn') && !event.target.closest('button')) {
+        event.preventDefault();
+      }
+    });
+    
+    document.addEventListener('gesturechange', function (event) {
+      // Only prevent on non-interactive areas
+      if (!event.target.closest('.number-btn') && !event.target.closest('button')) {
+        event.preventDefault();
+      }
+    });
+    
+    document.addEventListener('gestureend', function (event) {
+      // Only prevent on non-interactive areas
+      if (!event.target.closest('.number-btn') && !event.target.closest('button')) {
+        event.preventDefault();
+      }
+    });
+    
+    // Additional iOS-specific prevention for non-interactive areas
+    if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
+      document.addEventListener('touchend', function(event) {
+        // Don't prevent default on buttons
+        if (event.target.closest('.number-btn') || event.target.closest('button')) {
+          return;
+        }
+        event.preventDefault();
+      }, { passive: false });
+    }
+  })();
+
   let currentPassword = '';
   const correctPassword = '10003';
   const passwordDisplay = document.getElementById('password-display');
