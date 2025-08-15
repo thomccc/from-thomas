@@ -23,16 +23,16 @@ import Layout from '../layouts/Layout.astro';
           
           <!-- Number Pad Grid -->
           <div class="grid grid-cols-3 gap-4 max-w-xs mx-auto">
-            <button class="number-btn" data-number="1">1</button>
-            <button class="number-btn" data-number="2">2</button>
-            <button class="number-btn" data-number="3">3</button>
-            <button class="number-btn" data-number="4">4</button>
-            <button class="number-btn" data-number="5">5</button>
-            <button class="number-btn" data-number="6">6</button>
-            <button class="number-btn" data-number="7">7</button>
-            <button class="number-btn" data-number="8">8</button>
-            <button class="number-btn" data-number="9">9</button>
-            <button class="number-btn" data-number="0">0</button>
+            <div class="number-btn" data-number="1">1</div>
+            <div class="number-btn" data-number="2">2</div>
+            <div class="number-btn" data-number="3">3</div>
+            <div class="number-btn" data-number="4">4</div>
+            <div class="number-btn" data-number="5">5</div>
+            <div class="number-btn" data-number="6">6</div>
+            <div class="number-btn" data-number="7">7</div>
+            <div class="number-btn" data-number="8">8</div>
+            <div class="number-btn" data-number="9">9</div>
+            <div class="number-btn" data-number="0">0</div>
           </div>
           
           <div id="error-message" class="text-red-300 font-hedvig-serif text-sm hidden text-center">
@@ -49,6 +49,12 @@ import Layout from '../layouts/Layout.astro';
   .number-btn {
     @apply w-16 h-16 rounded-full bg-black/[0.03] text-[color(display-p3_0.533_0.518_0.494)] font-hedvig-sans text-2xl transition-all duration-500 ease-out flex items-center justify-center hover:bg-black/[0.06] active:scale-90;
     cursor: pointer;
+    /* Make divs behave like buttons */
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    /* Ensure they're interactive */
+    pointer-events: auto;
   }
   
   .number-btn:active {
@@ -86,17 +92,25 @@ import Layout from '../layouts/Layout.astro';
   const passwordDisplay = document.getElementById('password-display');
   const errorMessage = document.getElementById('error-message');
   
-  // Simple button functionality - no special touch handling needed
+  // Enhanced button functionality with explicit touch handling for iOS
   document.querySelectorAll('.number-btn').forEach(btn => {
+    // Add both click and touch events for maximum iOS compatibility
     btn.addEventListener('click', handleButtonClick);
+    btn.addEventListener('touchstart', handleButtonClick, { passive: false });
+    btn.addEventListener('touchend', handleButtonClick, { passive: false });
     
     function handleButtonClick(event) {
+      // Prevent default only for touch events to avoid double-firing
+      if (event.type.startsWith('touch')) {
+        event.preventDefault();
+      }
+      
       if (currentPassword.length < 5) {
         const number = this.getAttribute('data-number');
         currentPassword += number;
         
         // Debug logging
-        console.log('Button clicked:', number, 'Current password:', currentPassword);
+        console.log('Button pressed:', number, 'Current password:', currentPassword, 'Event type:', event.type);
         
         updateDisplay();
         checkPassword();
