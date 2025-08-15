@@ -45,7 +45,7 @@ import Layout from '../layouts/Layout.astro';
 </Layout>
 
 <style>
-  /* Page-specific scroll prevention and iOS zoom prevention */
+  /* Page-specific scroll prevention and CSS-only zoom prevention */
   .no-scroll-page {
     -webkit-touch-callout: none;
     -webkit-user-select: none;
@@ -57,11 +57,13 @@ import Layout from '../layouts/Layout.astro';
     -moz-text-size-adjust: none;
     -ms-text-size-adjust: none;
     text-size-adjust: none;
+    /* CSS-only zoom prevention - no JavaScript interference */
+    touch-action: pan-x pan-y;
   }
   
   .number-btn {
     @apply w-16 h-16 rounded-full bg-black/[0.03] text-[color(display-p3_0.533_0.518_0.494)] font-hedvig-sans text-2xl transition-all duration-500 ease-out flex items-center justify-center hover:bg-black/[0.06] active:scale-90;
-    /* Enhanced touch handling for iOS */
+    /* Enhanced touch handling for iOS - allow all touch actions */
     touch-action: manipulation;
     -webkit-tap-highlight-color: transparent;
     cursor: pointer;
@@ -101,41 +103,17 @@ import Layout from '../layouts/Layout.astro';
 </style>
 
 <script>
-  // Minimal iOS zoom prevention - only prevent pinch zoom on background
-  (function() {
-    // Only prevent pinch zoom on the page background, not on any interactive elements
-    document.addEventListener('gesturestart', function (event) {
-      // Only prevent on the page background, never on buttons or navigation
-      if (event.target === document.body || event.target === document.documentElement) {
-        event.preventDefault();
-      }
-    });
-    
-    document.addEventListener('gesturechange', function (event) {
-      // Only prevent on the page background, never on buttons or navigation
-      if (event.target === document.body || event.target === document.documentElement) {
-        event.preventDefault();
-      }
-    });
-    
-    document.addEventListener('gestureend', function (event) {
-      // Only prevent on the page background, never on buttons or navigation
-      if (event.target === document.body || event.target === document.documentElement) {
-        event.preventDefault();
-      }
-    });
-  })();
-
+  // Ultra-minimal zoom prevention - only CSS-based, no JavaScript interference
+  // This approach won't interfere with buttons or navigation at all
+  
   let currentPassword = '';
   const correctPassword = '10003';
   const passwordDisplay = document.getElementById('password-display');
   const errorMessage = document.getElementById('error-message');
   
-  // Enhanced button functionality for iOS compatibility
+  // Simple button functionality - no special touch handling needed
   document.querySelectorAll('.number-btn').forEach(btn => {
-    // Add both click and touch events for iOS compatibility
     btn.addEventListener('click', handleButtonClick);
-    btn.addEventListener('touchstart', handleButtonClick, { passive: true });
     
     function handleButtonClick(event) {
       if (currentPassword.length < 5) {
