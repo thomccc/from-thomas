@@ -61,8 +61,17 @@ import Layout from '../layouts/Layout.astro';
   
   .number-btn {
     @apply w-16 h-16 rounded-full bg-black/[0.03] text-[color(display-p3_0.533_0.518_0.494)] font-hedvig-sans text-2xl transition-all duration-500 ease-out flex items-center justify-center hover:bg-black/[0.06] active:scale-90;
-    /* Allow touch actions on buttons specifically */
+    /* Enhanced touch handling for iOS */
     touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    cursor: pointer;
+    /* Ensure buttons are interactive */
+    pointer-events: auto;
+    /* Prevent text selection */
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
   }
   
   .number-btn:active {
@@ -92,24 +101,9 @@ import Layout from '../layouts/Layout.astro';
 </style>
 
 <script>
-  // iOS zoom prevention - only for this page, but allow button functionality
+  // Simplified iOS zoom prevention - less aggressive approach
   (function() {
-    // Prevent zoom on double tap for non-interactive elements only
-    let lastTouchEnd = 0;
-    document.addEventListener('touchend', function (event) {
-      // Don't prevent default on buttons or interactive elements
-      if (event.target.closest('.number-btn') || event.target.closest('button')) {
-        return;
-      }
-      
-      const now = (new Date()).getTime();
-      if (now - lastTouchEnd <= 300) {
-        event.preventDefault();
-      }
-      lastTouchEnd = now;
-    }, false);
-    
-    // Prevent pinch zoom on the page background
+    // Only prevent pinch zoom on the page background
     document.addEventListener('gesturestart', function (event) {
       // Only prevent on non-interactive areas
       if (!event.target.closest('.number-btn') && !event.target.closest('button')) {
@@ -130,17 +124,6 @@ import Layout from '../layouts/Layout.astro';
         event.preventDefault();
       }
     });
-    
-    // Additional iOS-specific prevention for non-interactive areas
-    if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
-      document.addEventListener('touchend', function(event) {
-        // Don't prevent default on buttons
-        if (event.target.closest('.number-btn') || event.target.closest('button')) {
-          return;
-        }
-        event.preventDefault();
-      }, { passive: false });
-    }
   })();
 
   let currentPassword = '';
@@ -148,21 +131,33 @@ import Layout from '../layouts/Layout.astro';
   const passwordDisplay = document.getElementById('password-display');
   const errorMessage = document.getElementById('error-message');
   
-  // Number button functionality
+  // Enhanced button functionality with multiple event types
   document.querySelectorAll('.number-btn').forEach(btn => {
-    btn.addEventListener('click', function() {
+    // Add both click and touchstart events for better iOS compatibility
+    btn.addEventListener('click', handleButtonClick);
+    btn.addEventListener('touchstart', handleButtonClick);
+    
+    function handleButtonClick(event) {
+      // Prevent any default behavior that might interfere
+      event.preventDefault();
+      event.stopPropagation();
+      
       if (currentPassword.length < 5) {
         const number = this.getAttribute('data-number');
         currentPassword += number;
-        updateDisplay();
         
+        // Debug logging
+        console.log('Button clicked:', number, 'Current password:', currentPassword);
+        
+        updateDisplay();
         checkPassword();
       }
-    });
+    }
   });
   
   // Update the display
   function updateDisplay() {
+    console.log('Updating display with:', currentPassword);
     passwordDisplay.textContent = currentPassword;
     
     // Luxurious number appearance animation
@@ -239,4 +234,8 @@ import Layout from '../layouts/Layout.astro';
       }
     }
   });
+  
+  // Debug: Log when page loads
+  console.log('Page loaded, password display element:', passwordDisplay);
+  console.log('Number buttons found:', document.querySelectorAll('.number-btn').length);
 </script>
