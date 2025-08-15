@@ -3,7 +3,7 @@ import Layout from '../layouts/Layout.astro';
 ---
 
 <Layout title="From Thomas - Personal Website">
-  <div class="h-screen h-[100dvh] relative overflow-hidden no-scroll-page">
+  <div class="h-screen h-[100dvh] relative overflow-hidden">
     <!-- Background gradient overlay -->
     <div 
       id="bg-gradient"
@@ -45,35 +45,10 @@ import Layout from '../layouts/Layout.astro';
 </Layout>
 
 <style>
-  /* Page-specific scroll prevention and CSS-only zoom prevention */
-  .no-scroll-page {
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    -webkit-text-size-adjust: none;
-    -moz-text-size-adjust: none;
-    -ms-text-size-adjust: none;
-    text-size-adjust: none;
-    /* CSS-only zoom prevention - no JavaScript interference */
-    touch-action: pan-x pan-y;
-  }
-  
+  /* Basic styling only - no zoom prevention for now */
   .number-btn {
     @apply w-16 h-16 rounded-full bg-black/[0.03] text-[color(display-p3_0.533_0.518_0.494)] font-hedvig-sans text-2xl transition-all duration-500 ease-out flex items-center justify-center hover:bg-black/[0.06] active:scale-90;
-    /* Enhanced touch handling for iOS - allow all touch actions */
-    touch-action: manipulation;
-    -webkit-tap-highlight-color: transparent;
     cursor: pointer;
-    /* Ensure buttons are interactive */
-    pointer-events: auto;
-    /* Prevent text selection */
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
   }
   
   .number-btn:active {
