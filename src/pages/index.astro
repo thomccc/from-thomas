@@ -101,26 +101,26 @@ import Layout from '../layouts/Layout.astro';
 </style>
 
 <script>
-  // Simplified iOS zoom prevention - less aggressive approach
+  // Minimal iOS zoom prevention - only prevent pinch zoom on background
   (function() {
-    // Only prevent pinch zoom on the page background
+    // Only prevent pinch zoom on the page background, not on any interactive elements
     document.addEventListener('gesturestart', function (event) {
-      // Only prevent on non-interactive areas
-      if (!event.target.closest('.number-btn') && !event.target.closest('button')) {
+      // Only prevent on the page background, never on buttons or navigation
+      if (event.target === document.body || event.target === document.documentElement) {
         event.preventDefault();
       }
     });
     
     document.addEventListener('gesturechange', function (event) {
-      // Only prevent on non-interactive areas
-      if (!event.target.closest('.number-btn') && !event.target.closest('button')) {
+      // Only prevent on the page background, never on buttons or navigation
+      if (event.target === document.body || event.target === document.documentElement) {
         event.preventDefault();
       }
     });
     
     document.addEventListener('gestureend', function (event) {
-      // Only prevent on non-interactive areas
-      if (!event.target.closest('.number-btn') && !event.target.closest('button')) {
+      // Only prevent on the page background, never on buttons or navigation
+      if (event.target === document.body || event.target === document.documentElement) {
         event.preventDefault();
       }
     });
@@ -131,17 +131,11 @@ import Layout from '../layouts/Layout.astro';
   const passwordDisplay = document.getElementById('password-display');
   const errorMessage = document.getElementById('error-message');
   
-  // Enhanced button functionality with multiple event types
+  // Clean button functionality without interfering with navigation
   document.querySelectorAll('.number-btn').forEach(btn => {
-    // Add both click and touchstart events for better iOS compatibility
     btn.addEventListener('click', handleButtonClick);
-    btn.addEventListener('touchstart', handleButtonClick);
     
     function handleButtonClick(event) {
-      // Prevent any default behavior that might interfere
-      event.preventDefault();
-      event.stopPropagation();
-      
       if (currentPassword.length < 5) {
         const number = this.getAttribute('data-number');
         currentPassword += number;
