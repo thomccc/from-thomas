@@ -94,10 +94,9 @@ import Layout from '../layouts/Layout.astro';
   
   // Enhanced button functionality with explicit touch handling for iOS
   document.querySelectorAll('.number-btn').forEach(btn => {
-    // Add both click and touch events for maximum iOS compatibility
+    // Add both click and touchstart events for maximum iOS compatibility
     btn.addEventListener('click', handleButtonClick);
     btn.addEventListener('touchstart', handleButtonClick, { passive: false });
-    btn.addEventListener('touchend', handleButtonClick, { passive: false });
     
     function handleButtonClick(event) {
       // Prevent default only for touch events to avoid double-firing
